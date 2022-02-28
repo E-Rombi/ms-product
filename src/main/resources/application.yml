@@ -1,4 +1,4 @@
 amazon:
   aws:
-    accesskey: AKIAZRT4BDYT4BTZDVRZ
-    secretkey: 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
+    accesskey: ${AWS_ACCESSKEY}
+    secretkey: ${AWS_SECRETKEY}

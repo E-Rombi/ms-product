@@ -1,6 +1,7 @@
 package br.com.eduardo.msproduct.exception
 
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
