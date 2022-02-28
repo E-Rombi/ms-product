@@ -13,7 +13,7 @@ class ExceptionHandler {
 
     @ExceptionHandler
     fun handleConditionCheckFailed(e: ConditionalCheckFailedException): ResponseEntity<ErrorMessage> {
-        return ResponseEntity.badRequest().body(ErrorMessage(Messages.conditionCheckFailed()))
+        return ResponseEntity.unprocessableEntity().body(ErrorMessage(Messages.conditionCheckFailed()))
     }
 
     @ExceptionHandler
