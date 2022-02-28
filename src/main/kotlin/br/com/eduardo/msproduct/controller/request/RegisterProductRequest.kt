@@ -2,8 +2,10 @@ package br.com.eduardo.msproduct.controller.request
 
 import br.com.eduardo.msproduct.model.*
 import java.math.BigDecimal
+import javax.validation.constraints.NotBlank
 
 data class RegisterProductRequest(
+    @field:NotBlank
     val description: String,
     var coast: BigDecimal,
     var barcode: String,
