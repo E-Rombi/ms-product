@@ -1,0 +1,5 @@
+rootProject.name = 'ms-product'
+include 'domain'
+include 'application'
+include 'infrastructure'
+
