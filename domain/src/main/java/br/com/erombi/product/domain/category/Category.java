@@ -7,6 +7,7 @@ import java.time.Instant;
 
 public class Category extends AggregateRoot<CategoryID> {
     private String name;
+    private String description;
     private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
@@ -15,6 +16,7 @@ public class Category extends AggregateRoot<CategoryID> {
     private Category(
             final CategoryID anId,
             final String aName,
+            final String aDescription,
             final boolean isActive,
             final Instant aCreationDate,
             final Instant aUpdateDate,
@@ -22,17 +24,18 @@ public class Category extends AggregateRoot<CategoryID> {
     ) {
         super(anId);
         this.name = aName;
+        this.description = aDescription;
         this.active = isActive;
         this.createdAt = aCreationDate;
         this.updatedAt = aUpdateDate;
         this.deletedAt = aDeleteDate;
     }
 
-    public static Category newCategory(final String aName, final boolean isActive) {
+    public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
         final var id = CategoryID.unique();
         final var now = Instant.now();
 
-        return new Category(id, aName, isActive, now, now, null);
+        return new Category(id, aName, aDescription, isActive, now, now, null);
     }
 
     @Override
@@ -46,6 +49,10 @@ public class Category extends AggregateRoot<CategoryID> {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean isActive() {
@@ -62,5 +69,20 @@ public class Category extends AggregateRoot<CategoryID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    public void deactivate() {
+        if (getDeletedAt() == null) {
+            this.deletedAt = Instant.now();
+        }
+
+        this.active = false;
+        this.updatedAt = Instant.now();
+    }
+
+    public void activate() {
+        this.deletedAt = null;
+        this.active = true;
+        this.updatedAt = Instant.now();
     }
 }
