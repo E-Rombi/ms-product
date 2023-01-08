@@ -1,7 +1,5 @@
 package br.com.erombi.product.domain;
 
-import br.com.erombi.product.domain.validation.ValidationHandler;
-
 import java.util.Objects;
 
 public abstract class Entity<ID extends Identifier> {
@@ -13,7 +11,7 @@ public abstract class Entity<ID extends Identifier> {
         this.id = id;
     }
 
-    public abstract void validate(ValidationHandler handler);
+    public abstract void validate();
 
     public ID getId() {
         return id;

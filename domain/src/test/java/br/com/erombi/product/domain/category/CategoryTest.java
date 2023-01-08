@@ -1,11 +1,8 @@
 package br.com.erombi.product.domain.category;
 
 import br.com.erombi.product.domain.exceptions.DomainException;
-import br.com.erombi.product.domain.validation.handler.ThrowsValidationsHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.time.Instant;
 
 class CategoryTest {
 
@@ -30,14 +27,14 @@ class CategoryTest {
     @Test
     public void givenAnInvalidNullName_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
         final String expectedName = null;
-        final String expectedDescription =  null;
-        final var expectedErrorMessage = "'name' should not be null";
+        final String expectedDescription =  "Description not empty";
+        final var expectedErrorMessage = "'name' should not be null or blank";
         final var expectedErrorCount = 1;
         final var expectedIsActive = true;
 
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
+        final var err = Assertions.assertThrows(DomainException.class, () ->
+                Category.newCategory(expectedName, expectedDescription, expectedIsActive)
+        );
 
         Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());
@@ -46,30 +43,14 @@ class CategoryTest {
     @Test
     public void givenAnInvalidEmptyName_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
         final String expectedName = "";
-        final String expectedDescription =  null;
-        final var expectedErrorMessage = "'name' should not be empty";
+        final String expectedDescription =  "Description not empty";
+        final var expectedErrorMessage = "'name' should not be null or blank";
         final var expectedErrorCount = 1;
         final var expectedIsActive = true;
 
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
-
-        Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());
-    }
-
-    @Test
-    public void givenAnInvalidSmallName_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
-        final String expectedName = "ab";
-        final String expectedDescription =  null;
-        final var expectedErrorMessage = "'name' must be between 3 and 255 characters";
-        final var expectedErrorCount = 1;
-        final var expectedIsActive = true;
-
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
+        final var err = Assertions.assertThrows(DomainException.class, () ->
+                Category.newCategory(expectedName, expectedDescription, expectedIsActive)
+        );
 
         Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());
@@ -79,13 +60,13 @@ class CategoryTest {
     public void givenAnInvalidNullDescription_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
         final String expectedName = "Copo descartável";
         final String expectedDescription =  null;
-        final var expectedErrorMessage = "'description' should not be null";
+        final var expectedErrorMessage = "'description' should not be null or blank";
         final var expectedErrorCount = 1;
         final var expectedIsActive = true;
 
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
+        final var err = Assertions.assertThrows(DomainException.class, () ->
+                Category.newCategory(expectedName, expectedDescription, expectedIsActive)
+        );
 
         Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());
@@ -95,29 +76,13 @@ class CategoryTest {
     public void givenAnInvalidEmptyDescription_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
         final String expectedName = "Copo descartável";
         final String expectedDescription =  "";
-        final var expectedErrorMessage = "'description' should not be empty";
+        final var expectedErrorMessage = "'description' should not be null or blank";
         final var expectedErrorCount = 1;
         final var expectedIsActive = true;
 
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
-
-        Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());
-    }
-
-    @Test
-    public void givenAnInvalidSmallDescription_whenCallNewCategoryAndValidate_thenShouldReceiveError() {
-        final String expectedName = "Copo descartável";
-        final String expectedDescription =  "Copo";
-        final var expectedErrorMessage = "'description' must be between 10 and 500 characters";
-        final var expectedErrorCount = 1;
-        final var expectedIsActive = true;
-
-        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        final var err = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationsHandler()));
+        final var err = Assertions.assertThrows(DomainException.class, () ->
+                Category.newCategory(expectedName, expectedDescription, expectedIsActive)
+        );
 
         Assertions.assertEquals(expectedErrorCount, err.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, err.getErrors().get(0).message());

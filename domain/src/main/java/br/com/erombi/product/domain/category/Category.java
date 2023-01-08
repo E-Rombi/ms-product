@@ -1,9 +1,11 @@
 package br.com.erombi.product.domain.category;
 
 import br.com.erombi.product.domain.AggregateRoot;
-import br.com.erombi.product.domain.validation.ValidationHandler;
+import br.com.erombi.product.domain.exceptions.DomainException;
+import br.com.erombi.product.domain.validation.Error;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 public class Category extends AggregateRoot<CategoryID> {
     private String name;
@@ -29,6 +31,7 @@ public class Category extends AggregateRoot<CategoryID> {
         this.createdAt = aCreationDate;
         this.updatedAt = aUpdateDate;
         this.deletedAt = aDeleteDate;
+        validate();
     }
 
     public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
@@ -39,8 +42,19 @@ public class Category extends AggregateRoot<CategoryID> {
     }
 
     @Override
-    public void validate(final ValidationHandler handler) {
-        new CategoryValidator(this, handler).validate();
+    public void validate() {
+        var errors = new ArrayList<Error>();
+
+        if (this.name == null || this.name.isBlank()) {
+            errors.add(new Error("'name' should not be null or blank"));
+        }
+        if (this.description == null || this.description.isBlank()) {
+            errors.add(new Error("'description' should not be null or blank"));
+        }
+
+        if (!errors.isEmpty()) {
+            throw DomainException.with(errors);
+        }
     }
 
     public CategoryID getId() {
